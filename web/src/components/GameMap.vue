@@ -2,7 +2,8 @@
     <!-- ref用来与vue中创立的对象产生关联 -->
     <div ref="parent" class="gamemap">
         <!-- 游戏画到canvas画布里面 -->
-        <canvas ref="canvas"></canvas>
+        <!-- tabindex="0"可以让canvas获取用户的输入操作 -->
+        <canvas ref="canvas" tabindex="0"></canvas>
     </div>
 </template>
 
