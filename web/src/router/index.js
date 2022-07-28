@@ -4,6 +4,8 @@ import RanklistIndexView from "@/views/ranklist/RanklistIndexView"
 import RecordIndexView from "@/views/record/RecordIndexView"
 import UserBotIndexView from "@/views/user/bot/UserBotIndexView"
 import NotFound from "@/views/error/NotFound"
+import UserAccountLoginView from "@/views/user/account/UserAccountLoginView"
+import UserAccountRegisterView from "@/views/user/account/UserAccountRegisterView"
 
 //routes用来指定访问路径的资源
 const routes = [
@@ -16,15 +18,28 @@ const routes = [
     path:"/record",
     name:"record_index",
     component: RecordIndexView,
-  },{
+  },
+  {
     path:"/ranklist",
     name:"ranklist_index",
     component: RanklistIndexView,
-  },{
+  },
+  {
     path:"/user/bot",
     name:"user_bot_index",
     component: UserBotIndexView,
-  },{
+  },
+  {
+    path:"/user/account/login",
+    name:"user_account_login",
+    component: UserAccountLoginView,
+  },
+  {
+    path:"/user/account/register",
+    name:"user_account_register",
+    component: UserAccountRegisterView,
+  },
+  {
     path:"/404",
     name:"404",
     component: NotFound,
