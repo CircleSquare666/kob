@@ -1,5 +1,5 @@
 <template>
-    <ContentField>
+    <ContentField v-if="!$store.state.user.pulling_info">
         <div class="row justify-content-md-center">
             <div class="col-3">
                 <form @submit.prevent="login">
@@ -35,23 +35,37 @@ export default {
         let username = ref('');
         let password = ref('');
         let error_message = ref('');
+        const jwt_token = localStorage.getItem("jwt_token");
+        if (jwt_token != null) {
+            store.commit("updateToken", jwt_token);
+            store.dispatch("getInfo", {
+                success() {
+                    router.push({ name: "home" });
+                    store.commit("updatePullingInfo", false);
+                },
+                error() {
+                    store.commit("updatePullingInfo", false);
+                }
+            })
+        } else {
+            store.commit("updatePullingInfo", false);
+        }
 
         const login = () => {
             error_message.value = "";
-            store.dispatch("login",{
+            store.dispatch("login", {
                 username: username.value,
                 password: password.value,
-                success(){
-                    store.dispatch("getInfo",{
-                        success(){
-                            router.push({name :'home'});
+                success() {
+                    store.dispatch("getInfo", {
+                        success() {
+                            router.push({ name: 'home' });
                             //登录成功后需要再向后端发送请求，返回用户的用户名、头像、ID等信息。
-                            console.log(store.state.user);
                         }
                     })
 
                 },
-                error(){
+                error() {
                     error_message.value = "用户名或密码错误";
                 }
             })
