@@ -11,7 +11,7 @@ export default {
     },
     getters: {
     },
-    mutations: {
+    mutations: { //用commit调用mutations，同步操作放到mutations
         updateUser(state, user) {
             state.id = user.id;
             state.username = user.username;
@@ -32,7 +32,7 @@ export default {
             state.pulling_info = pulling_info;
         }
     },
-    actions: {
+    actions: { //用dispatch调用actions，异步操作用actions
         login(context, data) {
             $.ajax({
                 url: "http://localhost:3000/user/account/token",
