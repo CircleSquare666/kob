@@ -38,10 +38,12 @@ public class Bot {
     private String content;
 
     private Integer rating;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")//提前用JsonFormat定义日期格式
-    private Date create_time;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date modify_time;
+    @TableField("create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")//提前用JsonFormat定义日期格式
+    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
+    @TableField("modify_time")
+    private Date modifyTime;
 
 
 }

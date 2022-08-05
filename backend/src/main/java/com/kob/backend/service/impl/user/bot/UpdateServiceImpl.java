@@ -69,7 +69,7 @@ public class UpdateServiceImpl implements UpdateService {
         bot.setContent(content);
         bot.setDescription(description);
         Date date = new Date();
-        bot.setModify_time(date);
+        bot.setModifyTime(date);
         botMapper.updateById(bot);
         map.put("error_message", "success");
         return map;

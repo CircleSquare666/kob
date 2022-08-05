@@ -50,7 +50,7 @@ public class AddServiceImpl implements AddService {
             map.put("error_message", "描述长度过长！");
             return map;
         }
-        if (content == null) {
+        if (content == null || content.length() == 0) {
             map.put("error_message", "代码不能为空！");
             return map;
         }
