@@ -10,17 +10,19 @@
 <script>
 import { GameMap } from "@/assets/scripts/GameMap";
 import { ref, onMounted } from 'vue'
+import { useStore } from "vuex";
 
 export default {
 
     setup() {
+        const store = useStore();
         let parent = ref(null);
         let canvas = ref(null);
 
         // onMounted表示挂载完之后，要加载什么对象
         onMounted(() => {
             //在vue中获取对象要用.value
-            new GameMap(canvas.value.getContext('2d'), parent.value)
+            new GameMap(canvas.value.getContext('2d'), parent.value, store)
         });
 
         return {

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Data//自动创建getter、setter
 @NoArgsConstructor//自动创建无参构造函数
 @AllArgsConstructor//自动创建有参构造函数
-
 public class User {
     @TableId(type = IdType.AUTO)
     private Integer id;

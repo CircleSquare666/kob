@@ -31,7 +31,6 @@ public class CorsConfig implements Filter {
         response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-
         chain.doFilter(request, response);
     }
 

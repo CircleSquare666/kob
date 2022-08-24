@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-//SpringSecurity需要实现UserDetailsServiceImpl类以及UserDetails类
+//SpringSecurity需要实现UserDetailsServiceImpl类以及UserDetailsImpl类
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserMapper userMapper;

@@ -7,17 +7,18 @@ import { Wall } from "./Wall";
 
 export class GameMap extends AcGameObject {
     //parent是画布的父元素，用来动态修改画布的长宽
-    constructor(ctx, parent) {
+    constructor(ctx, parent, store) {
         super();
         this.ctx = ctx;
         this.parent = parent;
+        this.store = store;
         this.L = 0;//表示绝对距离，L表示一个单位长度
 
         this.rows = 13;
         this.cols = 14;
 
         //内部障碍物的数量
-        this.inner_walls_count = 40;
+        this.inner_walls_count = 20;
 
         //所有的障碍物包括边界墙
         this.walls = [];
@@ -39,39 +40,40 @@ export class GameMap extends AcGameObject {
 
     }
     create_walls() {
-        new Wall(0, 0, this);
+    //     new Wall(0, 0, this);
 
-        const g = [];
-        for (let r = 0; r < this.rows; r++) {
-            g[r] = [];
-            for (let c = 0; c < this.cols; c++) {
-                g[r][c] = false;
-            }
-        }
+    //     const g = [];
+    //     for (let r = 0; r < this.rows; r++) {
+    //         g[r] = [];
+    //         for (let c = 0; c < this.cols; c++) {
+    //             g[r][c] = false;
+    //         }
+    //     }
 
-        //给四周加上墙
-        for (let r = 0; r < this.rows; r++) {
-            g[r][0] = g[r][this.cols - 1] = true;
-        }
-        for (let c = 0; c < this.cols; c++) {
-            g[0][c] = g[this.rows - 1][c] = true;
-        }
+    //     //给四周加上墙
+    //     for (let r = 0; r < this.rows; r++) {
+    //         g[r][0] = g[r][this.cols - 1] = true;
+    //     }
+    //     for (let c = 0; c < this.cols; c++) {
+    //         g[0][c] = g[this.rows - 1][c] = true;
+    //     }
 
 
-        //中心对称创建随机障碍物，使游戏保证公平
-        for (let i = 0; i < this.inner_walls_count / 2; i++) {
-            for (let j = 0; j < 1000; j++) {
-                let r = parseInt(Math.random() * this.rows);
-                let c = parseInt(Math.random() * this.cols);
-                if (g[r][c] == true || g[this.rows - 1 - r][this.cols - 1 - c] == true) continue;
-                if (r == this.rows - 2 && c == 1 || c == this.cols - 2 && r == 1) continue;//两条蛇的起点
-                g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
-                break;
-            }
-        }
+    //     //中心对称创建随机障碍物，使游戏保证公平
+    //     for (let i = 0; i < this.inner_walls_count / 2; i++) {
+    //         for (let j = 0; j < 1000; j++) {
+    //             let r = parseInt(Math.random() * this.rows);
+    //             let c = parseInt(Math.random() * this.cols);
+    //             if (g[r][c] == true || g[this.rows - 1 - r][this.cols - 1 - c] == true) continue;
+    //             if (r == this.rows - 2 && c == 1 || c == this.cols - 2 && r == 1) continue;//两条蛇的起点
+    //             g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
+    //             break;
+    //         }
+    //     }
 
-        const copy_g = JSON.parse(JSON.stringify(g));//深拷贝
-        if (!this.check_connectivity(copy_g, this.rows - 2, 1, 1, this.cols - 2)) return false;
+    //     const copy_g = JSON.parse(JSON.stringify(g));//深拷贝
+    //     if (!this.check_connectivity(copy_g, this.rows - 2, 1, 1, this.cols - 2)) return false;
+        const g = this.store.state.pk.gamemap;
 
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.cols; c++) {
@@ -93,16 +95,16 @@ export class GameMap extends AcGameObject {
      * @param {*} tx 终点x坐标
      * @param {*} ty 终点y坐标
      */
-    check_connectivity(g, sx, sy, tx, ty) {
-        if (sx == tx && sy == ty) return true;
-        g[sx][sy] = true;//标记当前位置走过了
-        let dx = [-1, 0, 1, 0], dy = [0, 1, 0, -1];
-        for (let i = 0; i < 4; i++) {
-            let x = sx + dx[i], y = sy + dy[i];
-            if (!g[x][y] && this.check_connectivity(g, x, y, tx, ty)) return true;
-        }
-        return false;
-    }
+    // check_connectivity(g, sx, sy, tx, ty) {
+    //     if (sx == tx && sy == ty) return true;
+    //     g[sx][sy] = true;//标记当前位置走过了
+    //     let dx = [-1, 0, 1, 0], dy = [0, 1, 0, -1];
+    //     for (let i = 0; i < 4; i++) {
+    //         let x = sx + dx[i], y = sy + dy[i];
+    //         if (!g[x][y] && this.check_connectivity(g, x, y, tx, ty)) return true;
+    //     }
+    //     return false;
+    // }
 
     add_listening_events() {
         this.ctx.canvas.focus();//canvas要先聚焦
