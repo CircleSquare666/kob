@@ -40,39 +40,39 @@ export class GameMap extends AcGameObject {
 
     }
     create_walls() {
-    //     new Wall(0, 0, this);
+        //     new Wall(0, 0, this);
 
-    //     const g = [];
-    //     for (let r = 0; r < this.rows; r++) {
-    //         g[r] = [];
-    //         for (let c = 0; c < this.cols; c++) {
-    //             g[r][c] = false;
-    //         }
-    //     }
+        //     const g = [];
+        //     for (let r = 0; r < this.rows; r++) {
+        //         g[r] = [];
+        //         for (let c = 0; c < this.cols; c++) {
+        //             g[r][c] = false;
+        //         }
+        //     }
 
-    //     //给四周加上墙
-    //     for (let r = 0; r < this.rows; r++) {
-    //         g[r][0] = g[r][this.cols - 1] = true;
-    //     }
-    //     for (let c = 0; c < this.cols; c++) {
-    //         g[0][c] = g[this.rows - 1][c] = true;
-    //     }
+        //     //给四周加上墙
+        //     for (let r = 0; r < this.rows; r++) {
+        //         g[r][0] = g[r][this.cols - 1] = true;
+        //     }
+        //     for (let c = 0; c < this.cols; c++) {
+        //         g[0][c] = g[this.rows - 1][c] = true;
+        //     }
 
 
-    //     //中心对称创建随机障碍物，使游戏保证公平
-    //     for (let i = 0; i < this.inner_walls_count / 2; i++) {
-    //         for (let j = 0; j < 1000; j++) {
-    //             let r = parseInt(Math.random() * this.rows);
-    //             let c = parseInt(Math.random() * this.cols);
-    //             if (g[r][c] == true || g[this.rows - 1 - r][this.cols - 1 - c] == true) continue;
-    //             if (r == this.rows - 2 && c == 1 || c == this.cols - 2 && r == 1) continue;//两条蛇的起点
-    //             g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
-    //             break;
-    //         }
-    //     }
+        //     //中心对称创建随机障碍物，使游戏保证公平
+        //     for (let i = 0; i < this.inner_walls_count / 2; i++) {
+        //         for (let j = 0; j < 1000; j++) {
+        //             let r = parseInt(Math.random() * this.rows);
+        //             let c = parseInt(Math.random() * this.cols);
+        //             if (g[r][c] == true || g[this.rows - 1 - r][this.cols - 1 - c] == true) continue;
+        //             if (r == this.rows - 2 && c == 1 || c == this.cols - 2 && r == 1) continue;//两条蛇的起点
+        //             g[r][c] = g[this.rows - 1 - r][this.cols - 1 - c] = true;
+        //             break;
+        //         }
+        //     }
 
-    //     const copy_g = JSON.parse(JSON.stringify(g));//深拷贝
-    //     if (!this.check_connectivity(copy_g, this.rows - 2, 1, 1, this.cols - 2)) return false;
+        //     const copy_g = JSON.parse(JSON.stringify(g));//深拷贝
+        //     if (!this.check_connectivity(copy_g, this.rows - 2, 1, 1, this.cols - 2)) return false;
         const g = this.store.state.pk.gamemap;
 
         for (let r = 0; r < this.rows; r++) {
@@ -108,16 +108,29 @@ export class GameMap extends AcGameObject {
 
     add_listening_events() {
         this.ctx.canvas.focus();//canvas要先聚焦
-        const [snake0, snake1] = this.snakes;
+        // const [snake0, snake1] = this.snakes;
         this.ctx.canvas.addEventListener("keydown", e => {
-            if (e.key === 'w') snake0.set_direction(0);
-            else if (e.key === 'd') snake0.set_direction(1);
-            else if (e.key === 's') snake0.set_direction(2);
-            else if (e.key === 'a') snake0.set_direction(3);
-            else if (e.key === 'ArrowUp') snake1.set_direction(0);
-            else if (e.key === 'ArrowRight') snake1.set_direction(1);
-            else if (e.key === 'ArrowDown') snake1.set_direction(2);
-            else if (e.key === 'ArrowLeft') snake1.set_direction(3);
+            // if (e.key === 'w') snake0.set_direction(0);
+            // else if (e.key === 'd') snake0.set_direction(1);
+            // else if (e.key === 's') snake0.set_direction(2);
+            // else if (e.key === 'a') snake0.set_direction(3);
+            // else if (e.key === 'ArrowUp') snake1.set_direction(0);
+            // else if (e.key === 'ArrowRight') snake1.set_direction(1);
+            // else if (e.key === 'ArrowDown') snake1.set_direction(2);
+            // else if (e.key === 'ArrowLeft') snake1.set_direction(3);
+
+            let d = -1;
+            if (e.key === 'w') d = 0;
+            else if (e.key === 'd') d = 1;
+            else if (e.key === 's') d = 2;
+            else if (e.key === 'a') d = 3;
+
+            if (d >= 0) {
+                this.store.state.pk.socket.send(JSON.stringify({
+                    event: "move",
+                    direction: d,
+                }));
+            }
         });
     }
 
@@ -152,20 +165,20 @@ export class GameMap extends AcGameObject {
         }
     }
 
-    check_valid(cell){ //检测目标位置是否合法：没有撞到两条蛇的身体和障碍物
-        for(const wall of this.walls){
-            if(wall.c === cell.c && wall.r === cell.r){
+    check_valid(cell) { //检测目标位置是否合法：没有撞到两条蛇的身体和障碍物
+        for (const wall of this.walls) {
+            if (wall.c === cell.c && wall.r === cell.r) {
                 return false;
             }
         }
 
-        for(const snake of this.snakes){
+        for (const snake of this.snakes) {
             let k = snake.cells.length;
-            if(!snake.check_tail_increasing()){//特判蛇尾，只有当蛇增加长度的时候，才考虑蛇尾元素
+            if (!snake.check_tail_increasing()) {//特判蛇尾，只有当蛇增加长度的时候，才考虑蛇尾元素
                 k--;
             }
-            for(let i = 0; i < k; i++){
-                if(snake.cells[i].r === cell.r && snake.cells[i].c === cell.c){
+            for (let i = 0; i < k; i++) {
+                if (snake.cells[i].r === cell.r && snake.cells[i].c === cell.c) {
                     return false;
                 }
             }

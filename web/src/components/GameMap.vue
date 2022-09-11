@@ -22,7 +22,7 @@ export default {
         // onMounted表示挂载完之后，要加载什么对象
         onMounted(() => {
             //在vue中获取对象要用.value
-            new GameMap(canvas.value.getContext('2d'), parent.value, store)
+            store.commit("updateGameObject", new GameMap(canvas.value.getContext('2d'), parent.value, store));
         });
 
         return {
@@ -40,7 +40,7 @@ div.gamemap {
     height: 100%;
     /* 用来将画布居中 */
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
 }
 </style>
