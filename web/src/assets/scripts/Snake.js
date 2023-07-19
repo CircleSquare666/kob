@@ -9,7 +9,7 @@ export class Snake extends AcGameObject {
         this.color = info.color;
         this.gamemap = gamemap;
 
-        this.cells = [new Cell(info.r, info.c)]; //存放蛇的身体，cells[0]存放蛇头3
+        this.cells = [new Cell(info.r, info.c)]; //存放蛇的身体，cells[0]存放蛇头
 
         this.next_cell = null;//下一步的目标位置
 

@@ -71,7 +71,7 @@ export class GameMap extends AcGameObject {
         //         }
         //     }
 
-        //     const copy_g = JSON.parse(JSON.stringify(g));//深拷贝
+        //     const copy_g = JSON.parse(JSON.stringify(g));//深拷贝后再运行Flood Fill算法
         //     if (!this.check_connectivity(copy_g, this.rows - 2, 1, 1, this.cols - 2)) return false;
         const g = this.store.state.pk.gamemap;
 

@@ -1,3 +1,4 @@
+<!-- 每个页面都是一个单独的组件 -->
 <template>
     <ContentField>
         404 Not Found

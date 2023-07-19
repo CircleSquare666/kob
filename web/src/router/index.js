@@ -66,10 +66,9 @@ const routes = [
     }
   },
   {
-    //用来将根路径重定向到pk路径
     path: "/",
     name: "home",
-    redirect: "/pk",
+    redirect: "/pk", //用来将根路径重定向到pk路径
     meta: {
       requestAuth: true,//访问该页面是否要授权
     }

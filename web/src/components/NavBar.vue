@@ -1,6 +1,6 @@
-/**
+<!-- 
     导航栏（用bootstrap或Element UI来做）
- */
+-->
 
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -64,7 +64,7 @@
     </nav>
 </template>
 
-//加上scoped会使这个css加上一个随机字符串，避免影响到组件以外的部分
+<!-- 加上scoped会使这个css加上一个随机字符串，避免影响到组件以外的部分 -->
 <style scoped>
 </style>
 

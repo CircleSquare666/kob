@@ -4,13 +4,13 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
+import NavBar from '@/components/NavBar.vue' //导入组件
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
 
 export default{
   components:{
-    NavBar
+    NavBar //想用这个组件的话，就要放到components
   }
 }
 </script>

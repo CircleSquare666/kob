@@ -1,3 +1,4 @@
+//store是用来存储全局信息的
 import $ from 'jquery'
 
 export default {
@@ -60,7 +61,7 @@ export default {
                 url: "http://localhost:3000/user/account/info",
                 type: "get",
                 headers: {
-                    Authorization: "Wuhudsm" + context.state.token,
+                    Authorization: "Bearer " + context.state.token,
                 },
                 success(resp) {
                     if (resp.error_message === 'success') {

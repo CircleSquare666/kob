@@ -179,7 +179,7 @@ export default {
                 url: "http://localhost:3000/user/bot/getlist",
                 type: "get",
                 headers: {
-                    Authorization: "Wuhudsm" + store.state.user.token,
+                    Authorization: "Bearer " + store.state.user.token,
                 },
                 success(resp) {
                     bots.value = resp;
@@ -203,7 +203,7 @@ export default {
                     content: botadd.content,
                 },
                 headers: {
-                    Authorization: "Wuhudsm" + store.state.user.token,
+                    Authorization: "Bearer " + store.state.user.token,
                 },
                 success(resp) {
                     if (resp.error_message === 'success') {
@@ -235,7 +235,7 @@ export default {
                     content: bot.content,
                 },
                 headers: {
-                    Authorization: "Wuhudsm" + store.state.user.token,
+                    Authorization: "Bearer " + store.state.user.token,
                 },
                 success(resp) {
                     if (resp.error_message === 'success') {
@@ -260,7 +260,7 @@ export default {
                     bot_id: bot.id,
                 },
                 headers: {
-                    Authorization: "Wuhudsm" + store.state.user.token,
+                    Authorization: "Bearer " + store.state.user.token,
                 },
                 success(resp) {
                     if (resp.error_message === 'success') {
@@ -295,7 +295,7 @@ export default {
         //         content:"#include<bits/std++.h>",
         //     },
         //     headers: {
-        //         Authorization: "Wuhudsm" + store.state.user.token,
+        //         Authorization: "Bearer " + store.state.user.token,
         //     },
         //     success(resp) {
         //         console.log(resp);
